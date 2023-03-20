@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-base-100 text-white;
+  }
+}
+
+@layer components {
+  .btn-blue {
+    @apply text-white font-bold px-4 py-2 rounded bg-blue-600 hover:bg-blue-500;
+  }
+}
+
+/* @import './scrollbar-color.css';  */
+
+:root {
+  --scrollbarTrack: hsla(var(--b2));
+  --scrollbarThumb: hsla(var(--p));
+  --scrollbarThumbHover: hsla(var(--s));
+}
+/* Scrollbar colors*/
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--scrollbarTrack);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbarThumb);
+  border-radius: 3px
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbarThumbHover);
+}

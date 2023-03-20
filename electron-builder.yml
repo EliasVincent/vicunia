@@ -1,0 +1,12 @@
+appId: com.eliasvsimon.vicunia
+productName: Vicunia
+copyright: Copyright © 2023 Elias Vincent Simon
+directories:
+  output: dist
+  buildResources: resources
+files:
+  - from: .
+    filter:
+      - package.json
+      - app
+publish: null
