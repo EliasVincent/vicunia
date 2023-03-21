@@ -5,6 +5,7 @@ import Navbar from './navbar';
 import { prepareCommand } from '../components/utils';
 import ReactMarkdown from 'react-markdown'
 const { shell } = require('electron');
+const os = require('os');
 const { exec, spawn } = require("child_process");
 const path = require('path');
 const semver = require('semver');
@@ -12,6 +13,7 @@ const Downloader = require("nodejs-file-downloader");
 const cmake = require('cmake-js');
 
 const home = path.join(require('os').homedir(), 'alpaca.cpp');
+const windows = os.platform == "win32";
 
 interface CommandItem {
   name: String,
@@ -219,7 +221,12 @@ function Home() {
       return
     }
     const spawnCommand = prepareCommand(command);
-    const child = spawn(spawnCommand[0], spawnCommand.slice(1), { cwd: home });
+    let child = windows ? spawn('cmd') : spawn('sh');
+
+    if (child) {
+      console.log("if shell")
+      child.stdin.write(command + "\n")
+    }
     // GENERIC COMMANDS
     child.stdout.on('data', (data) => {
       console.log(`stdout: ${data}`);
