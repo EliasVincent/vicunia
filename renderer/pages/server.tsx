@@ -67,6 +67,8 @@ function Server() {
     // todo we only want to spawn the shell once
     try {
       shell = windows ? spawn('cmd') : spawn('sh');
+      shell.stdin.setEncoding('utf-8');
+      shell.stdout.setEncoding('utf-8');
     } catch (error) {
       console.error(error);
       setIsStarting(false);

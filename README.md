@@ -22,9 +22,8 @@ If current Alpaca.cpp throws errors, [I have tested branches on my fork](https:/
 
 ## TODO
 
-- Emoji support on all platforms
+- Choose your own llama.cpp / alpaca.cpp folder
 - Options menu for all parameters
-- Choosing between 7B and 13B models
 
 ## Credits
 
