@@ -2,6 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Navbar from './navbar';
+import SettingsModal from './settings-modal';
+import { ServerSettings } from '../components/ServerSettings';
 
 import stripAnsi from 'strip-ansi';
 
@@ -9,20 +11,6 @@ const os = require('os');
 const path = require('path');
 const { exec, spawn } = require("child_process");
 const kill = require('tree-kill');
-
-
-interface ServerSettings {
-  message: string;
-  t: number;
-  numOfTokens: number;
-  repetitionPenalty: number;
-  isReverse: boolean;
-  reverseMessage: string;
-  temp: number;
-  topP: number;
-  topK: number;
-  repeatLastN: number;
-}
 
 
 const homeDirectory = os.homedir();
@@ -174,19 +162,10 @@ function Server() {
       <div className="h-screen flex flex-col flex-grow w-full bg-base-100 shadow-xl rounded-lg overflow-hidden">
         <Navbar />
 
-        <input type="checkbox" id="my-modal" className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Options</h3>
-            <p className="py-4">Coming soon</p>
-            <div className="modal-action">
-              <label htmlFor="my-modal" className="btn">Close</label>
-            </div>
-          </div>
-        </div>
+        <SettingsModal />
 
         <div aria-label='chat-options-bar' className="bg-neutral p-4 flex flex-row justify-between items-center h-16 w-full">
-          <div className='flex flex-row gap-2 items-center overflow-x-auto w-full'>
+          <div className='flex flex-row gap-2 items-center overflow-x-auto sm:overflow-x-hidden w-full'>
             <div className={isStarting ? "rounded btn btn-primary loading" : "rounded btn btn-primary"} onClick={startSpawn}>start server</div>
             <div onClick={killProcess} className='rounded btn btn-primary'>Stop</div>
 
