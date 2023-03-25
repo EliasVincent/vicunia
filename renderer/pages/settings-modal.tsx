@@ -4,7 +4,7 @@ import { ServerSettings } from '../components/ServerSettings';
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
-const ipcRenderer = require('electron').ipcRenderer;
+const {ipcRenderer} = require('electron');
 
 const defaultFolder = path.join(os.homedir(), "alpaca.cpp");
 
@@ -50,11 +50,6 @@ function SettingsModal() {
       console.log("Successfully Written to File.");
     });
   }
-
-  ipcRenderer.on('selected-directory', (event, arg) => {
-    console.log(arg);
-    setSettings({ ...settings, folderPath: arg });
-  })
 
   // React.useEffect(() => {
   //   console.log("settings changed");
