@@ -5,20 +5,22 @@ const os = require('os');
 const path = require('path');
 const fs = require('fs');
 
+const defaultFolder = path.join(os.homedir(), "alpaca.cpp");
+
 function SettingsModal() {
 
   const [settings, setSettings] = React.useState<ServerSettings>({
-    folderPath: "",
+    folderPath: defaultFolder,
     llamaSettings: {
-      t: 0,
-      numOfTokens: 0,
-      repetitionPenalty: 1.1,
+      t: 4,
+      numOfTokens: 128,
+      repetitionPenalty: 1.3,
       isReverse: false,
       reverseMessage: "",
-      temp: 1,
+      temp: 0.1,
       topP: 0.9,
       topK: 40,
-      repeatLastN: 0,
+      repeatLastN: 64,
     }
   })
 
@@ -26,9 +28,10 @@ function SettingsModal() {
   const loadSettings = () => {
     const settingsFile = path.join(os.homedir(), ".vicunia-settings.json");
     fs.readFile(settingsFile, (err: any, data: any) => {
-      // just don't do anything and roll with the defaults
+      // write default settings if file doesn't exist
       if (err) {
-        console.log(err);
+        console.log("Settings file not found, creating new one...");
+        saveSettings();
         return;
       }
       console.log(data);
@@ -72,16 +75,16 @@ function SettingsModal() {
               <input type="text" id="folder-path" className="input input-bordered" value={settings.folderPath} onChange={(e) => setSettings({ ...settings, folderPath: e.target.value })} />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="t" className="font-bold ml-2 mb-1">T</label>
-              <input type="number" id="t" className="input input-bordered" value={settings.llamaSettings.t} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, t: parseInt(e.target.value) } })} />
+              <label htmlFor="t" className="font-bold ml-2 mb-1">Threads</label>
+              <input type="number" step="1" id="t" className="input input-bordered" value={settings.llamaSettings.t} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, t: parseInt(e.target.value) } })} />
             </div>
             <div className="flex flex-col">
               <label htmlFor="num-of-tokens" className="font-bold ml-2 mb-1">Num of Tokens</label>
-              <input type="number" id="num-of-tokens" className="input input-bordered" value={settings.llamaSettings.numOfTokens} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, numOfTokens: parseInt(e.target.value) } })} />
+              <input type="number" step="1" id="num-of-tokens" className="input input-bordered" value={settings.llamaSettings.numOfTokens} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, numOfTokens: parseInt(e.target.value) } })} />
             </div>
             <div className="flex flex-col">
               <label htmlFor="repetition-penalty" className="font-bold ml-2 mb-1">Repetition Penalty</label>
-              <input type="number" id="repetition-penalty" className="input input-bordered" value={settings.llamaSettings.repetitionPenalty} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, repetitionPenalty: parseFloat(e.target.value) } })} />
+              <input type="number" step="0.1" id="repetition-penalty" className="input input-bordered" value={settings.llamaSettings.repetitionPenalty} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, repetitionPenalty: parseFloat(e.target.value) } })} />
             </div>
             <div className="flex flex-col">
               <label htmlFor="is-reverse" className="font-bold ml-2 mb-1">Is Reverse</label>
@@ -93,19 +96,19 @@ function SettingsModal() {
             </div>
             <div className="flex flex-col">
               <label htmlFor="temp" className="font-bold ml-2 mb-1">Temp</label>
-              <input type="number" id="temp" className="input input-bordered" value={settings.llamaSettings.temp} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, temp: parseFloat(e.target.value) } })} />
+              <input type="number" step="0.1" id="temp" className="input input-bordered" value={settings.llamaSettings.temp} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, temp: parseFloat(e.target.value) } })} />
             </div>
             <div className="flex flex-col">
               <label htmlFor="top-p" className="font-bold ml-2 mb-1">Top P</label>
-              <input type="number" id="top-p" className="input input-bordered" value={settings.llamaSettings.topP} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, topP: parseFloat(e.target.value) } })} />
+              <input type="number" step="0.1" id="top-p" className="input input-bordered" value={settings.llamaSettings.topP} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, topP: parseFloat(e.target.value) } })} />
             </div>
             <div className="flex flex-col">
               <label htmlFor="top-k" className="font-bold ml-2 mb-1">Top K</label>
-              <input type="number" id="top-k" className="input input-bordered" value={settings.llamaSettings.topK} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, topK: parseInt(e.target.value) } })} />
+              <input type="number" step="1" id="top-k" className="input input-bordered" value={settings.llamaSettings.topK} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, topK: parseInt(e.target.value) } })} />
             </div>
             <div className="flex flex-col">
               <label htmlFor="repeat-last-n" className="font-bold ml-2 mb-1">Repeat Last N</label>
-              <input type="number" id="repeat-last-n" className="input input-bordered" value={settings.llamaSettings.repeatLastN} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, repeatLastN: parseInt(e.target.value) } })} />
+              <input type="number" step="1" id="repeat-last-n" className="input input-bordered" value={settings.llamaSettings.repeatLastN} onChange={(e) => setSettings({ ...settings, llamaSettings: { ...settings.llamaSettings, repeatLastN: parseInt(e.target.value) } })} />
             </div>
           </div>
 

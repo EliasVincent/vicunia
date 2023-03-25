@@ -9,6 +9,7 @@ import stripAnsi from 'strip-ansi';
 
 const os = require('os');
 const path = require('path');
+const fs = require('fs');
 const { exec, spawn } = require("child_process");
 const kill = require('tree-kill');
 
@@ -50,6 +51,25 @@ function Server() {
     return serverReady && !isGenerating
   }
 
+  const generateArgs = (settingsFile: ServerSettings): string => {
+    const threads = settingsFile.llamaSettings.t;
+    const tokens = settingsFile.llamaSettings.numOfTokens;
+    const repetitionPenalty = settingsFile.llamaSettings.repetitionPenalty;
+    const isReverse = settingsFile.llamaSettings.isReverse;
+    const reverseMessage = settingsFile.llamaSettings.reverseMessage;
+    const temp = settingsFile.llamaSettings.temp;
+    const topP = settingsFile.llamaSettings.topP;
+    const topK = settingsFile.llamaSettings.topK;
+    const repeatLastN = settingsFile.llamaSettings.repeatLastN;
+
+    /**
+     * run chat.exe / main.exe -h to get the full list of arguments
+     */
+    let args = `-i -t ${threads} -n ${tokens} --repeat_penalty ${repetitionPenalty}${isReverse ? " --reverse" + reverseMessage : ""} --temp ${temp} --top_p ${topP} --top_k ${topK} --repeat_last_n ${repeatLastN}`
+
+    return args;
+  }
+
   const startSpawn = () => {
     setIsStarting(true);
     // todo we only want to spawn the shell once
@@ -78,7 +98,33 @@ function Server() {
     if (shell) {
       shell.stdin.write(windows ? `chcp 65001\n` : ``);
       shell.stdin.write(`cd ${alpacaPath}\n`);
-      shell.stdin.write(windows ? "chat.exe\n" : "./chat\n");
+
+      const settingsFilePath = path.join(os.homedir(), ".vicunia-settings.json");
+      if (fs.existsSync(settingsFilePath)) {
+        console.log("settings file exists")
+      } else {
+        console.log("settings file does not exist, writing default settings")
+        const defaultSettings = {
+            folderPath: alpacaPath,
+            llamaSettings: {
+              t: 4,
+              numOfTokens: 128,
+              repetitionPenalty: 1.3,
+              isReverse: false,
+              reverseMessage: "",
+              temp: 0.1,
+              topP: 0.9,
+              topK: 40,
+              repeatLastN: 64,
+            }
+          }
+        fs.writeFileSync(settingsFilePath, JSON.stringify(defaultSettings));
+      }
+
+      const settingsFile = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
+      const args = generateArgs(settingsFile);
+      console.log("starting server with args: " + args)
+      shell.stdin.write(windows ? `chat.exe ${args}\n` : `./chat  ${args}\n`);
     }
   }
 
