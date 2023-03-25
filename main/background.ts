@@ -19,6 +19,11 @@ if (isProd) {
   const mainWindow = createWindow("main", {
     width: 1000,
     height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      preload: __dirname + "/preload.js",
+    },
   });
 
   remoteMain.enable(mainWindow.webContents);
@@ -33,6 +38,10 @@ if (isProd) {
     event.returnValue = dir;
     event.sender.send("selected-directory", dir);
     console.log(dir);
+  });
+  
+  ipcMain.on("open-dev-tools", (event) => {
+    mainWindow.webContents.openDevTools();
   });
 
   if (isProd) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-const { shell } = require('electron');
+const { shell, ipcRenderer } = require('electron');
 
 function Navbar() {
   return (
@@ -35,7 +35,8 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          <a onClick={() => shell.openExternal("https://github.com/EliasVincent")} className="btn btn-base">Github</a>
+          <a onClick={() => ipcRenderer.send("open-dev-tools")} className="btn btn-base mr-2">Devtools</a>
+          <a onClick={() => shell.openExternal("https://github.com/EliasVincent/vicunia")} className="btn btn-base">Github</a>
         </div>
       </div>
     </React.Fragment>

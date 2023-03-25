@@ -21,12 +21,12 @@
     "electron-store": "^8.1.0"
   },
   "devDependencies": {
-    "@types/node": "^18.11.18",
+    "@types/node": "^18.15.9",
     "@types/react": "^18.0.26",
     "autoprefixer": "^10.4.7",
     "cmake-js": "^7.2.1",
     "daisyui": "^2.51.3",
-    "electron": "21.3.3",
+    "electron": "^21.3.3",
     "electron-builder": "^23.6.0",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
@@ -43,7 +43,7 @@
   },
   "cmake-js": {
     "runtime": "electron",
-    "runtimeVersion": "21.3.3",
+    "runtimeVersion": "^21.3.3",
     "arch": "x64"
   }
 }

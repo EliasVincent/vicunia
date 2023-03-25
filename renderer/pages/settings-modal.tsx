@@ -4,7 +4,7 @@ import { ServerSettings } from '../components/ServerSettings';
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
-const ipcRenderer = require('electron').ipcRenderer;
+const ipcRenderer = require('electron');
 
 const defaultFolder = path.join(os.homedir(), "alpaca.cpp");
 

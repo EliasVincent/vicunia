@@ -35,8 +35,10 @@ function Server() {
   const [isStarting, setIsStarting] = React.useState<boolean>(false);
   const [isGenerating, setIsGenerating] = React.useState<boolean>(false);
   const [isStreaming, setIsStreaming] = React.useState<boolean>(false);
+  
 
   const [simpleOut, setSimpleOut] = React.useState<string>("");
+  const [simpleErr, setSimpleErr] = React.useState<string>("");
 
   const inputRef = React.useRef<HTMLInputElement>(null);
   const chatBottomRef = React.useRef<HTMLDivElement>(null);
@@ -123,6 +125,24 @@ function Server() {
 
       const settingsFile = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
       const args = generateArgs(settingsFile);
+      const folderPath = settingsFile.folderPath;
+
+      let executable = "chat"
+
+      // if the folder has a llama.cpp or alpaca.cpp binary
+      if (fs.existsSync(path.join(folderPath.toString(), "chat.exe")) || fs.existsSync(path.join(folderPath.toString(), "chat"))) {
+        console.log("chat binary exists")
+        executable = "chat"
+      } else if (fs.existsSync(path.join(folderPath.toString(), "main.exe")) || fs.existsSync(path.join(folderPath.toString(), "main"))) {
+        console.log("main binary exists")
+        executable = "main"
+      } else {
+        console.error("compiled binaries do not exist in the selected folder, please compile them first")
+        setIsStarting(false);
+        setSimpleErr("compiled binaries do not exist in the selected folder, please compile them first")
+        return;
+      }
+
       console.log("starting server with args: " + args)
       shell.stdin.write(windows ? `chat.exe ${args}\n` : `./chat  ${args}\n`);
     }
@@ -218,6 +238,9 @@ function Server() {
             <div className={serverReady ? "badge badge-success gap-2 h-full align-middle" : "badge badge-warning gap-2 h-full align-middle"}>
               {serverReady ? "Alpaca Ready" : "Not started"}
             </div>
+
+            {simpleErr !== "" && <div className="badge badge-warning gap-2 h-full align-middle">{simpleErr}</div>}
+
             <div className='ml-auto'>
               <label htmlFor="my-modal" className="rounded btn btn-primary justify-end">Options</label>
             </div>
