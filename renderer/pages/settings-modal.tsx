@@ -4,7 +4,6 @@ import { ServerSettings } from '../components/ServerSettings';
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
-const {ipcRenderer} = require('electron');
 
 const defaultFolder = path.join(os.homedir(), "alpaca.cpp");
 
@@ -76,7 +75,6 @@ function SettingsModal() {
             <div className="flex flex-col">
               <label htmlFor="folder-path" className="font-bold ml-2 mb-1">Folder Path</label>
               <input type="text" id="folder-path" className="input input-bordered" value={settings.folderPath} onChange={(e) => setSettings({ ...settings, folderPath: e.target.value })} />
-              <button className="btn btn-primary mt-2" onClick={() => ipcRenderer.send('open-folder-dialog', settings.folderPath)}>Select Folder</button>
             </div>
             <div className="flex flex-col">
               <label htmlFor="t" className="font-bold ml-2 mb-1">Threads</label>
