@@ -98,9 +98,6 @@ function Server() {
 
     // Check if shell is defined before writing to stdin
     if (shell) {
-      shell.stdin.write(windows ? `chcp 65001\n` : ``);
-      shell.stdin.write(`cd ${alpacaPath}\n`);
-
       const settingsFilePath = path.join(os.homedir(), ".vicunia-settings.json");
       if (fs.existsSync(settingsFilePath)) {
         console.log("settings file exists")
@@ -126,6 +123,11 @@ function Server() {
       const settingsFile = JSON.parse(fs.readFileSync(settingsFilePath, 'utf8'));
       const args = generateArgs(settingsFile);
       const folderPath = settingsFile.folderPath;
+
+      
+      shell.stdin.write(windows ? `chcp 65001\n` : ``);
+      shell.stdin.write(`cd ${folderPath}\n`);
+
 
       let executable = "chat"
 
