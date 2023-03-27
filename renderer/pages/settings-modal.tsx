@@ -23,6 +23,7 @@ function SettingsModal() {
       repeatLastN: 64,
     }
   })
+  const savedConfirmed = React.useRef(null);
 
   // load settings from file
   const loadSettings = () => {
@@ -48,6 +49,14 @@ function SettingsModal() {
       if (err) console.log(err);
       console.log("Successfully Written to File.");
     });
+
+    // show saved confirmation
+    if (savedConfirmed.current) {
+      savedConfirmed.current.className = "transition-all visible p-2 alert-success rounded-lg flex items-center text-green-500";
+      setTimeout(() => {
+        savedConfirmed.current.className = "invisible"
+      }, 1000);
+    }
   }
 
   // React.useEffect(() => {
@@ -71,7 +80,7 @@ function SettingsModal() {
 
           <div className="modal-body flex flex-col gap-5">
 
-          
+
             <div className="flex flex-col">
               <label htmlFor="folder-path" className="font-bold ml-2 mb-1">Folder Path</label>
               <input type="text" id="folder-path" className="input input-bordered" value={settings.folderPath} onChange={(e) => setSettings({ ...settings, folderPath: e.target.value })} />
@@ -115,8 +124,8 @@ function SettingsModal() {
           </div>
 
 
-          <div className="modal-action">
-            <button className="btn btn-primary" onClick={saveSettings}>Save</button>
+          <div className="modal-action ">
+            <p ref={savedConfirmed} className="invisible transition-all">Saved</p><button className="btn btn-primary" onClick={saveSettings}>Save</button>
             <label htmlFor="my-modal" className="btn">Close</label>
           </div>
         </div>
