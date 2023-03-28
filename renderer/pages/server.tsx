@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Navbar from './navbar';
 import SettingsModal from './settings-modal';
 import { ServerSettings } from '../components/ServerSettings';
+import { saveChatIcon } from '../components/icons';
 
 import stripAnsi from 'strip-ansi';
 
@@ -104,19 +105,19 @@ function Server() {
       } else {
         console.log("settings file does not exist, writing default settings")
         const defaultSettings = {
-            folderPath: alpacaPath,
-            llamaSettings: {
-              t: 4,
-              numOfTokens: 128,
-              repetitionPenalty: 1.3,
-              isReverse: false,
-              reverseMessage: "",
-              temp: 0.1,
-              topP: 0.9,
-              topK: 40,
-              repeatLastN: 64,
-            }
+          folderPath: alpacaPath,
+          llamaSettings: {
+            t: 4,
+            numOfTokens: 128,
+            repetitionPenalty: 1.3,
+            isReverse: false,
+            reverseMessage: "",
+            temp: 0.1,
+            topP: 0.9,
+            topK: 40,
+            repeatLastN: 64,
           }
+        }
         fs.writeFileSync(settingsFilePath, JSON.stringify(defaultSettings));
       }
 
@@ -124,7 +125,7 @@ function Server() {
       const args = generateArgs(settingsFile);
       const folderPath = settingsFile.folderPath;
 
-      
+
       shell.stdin.write(windows ? `chcp 65001\n` : ``);
       shell.stdin.write(`cd ${folderPath}\n`);
 
@@ -219,6 +220,31 @@ function Server() {
     }
   }
 
+  const exportChatHistory = () => {
+    let chatHistoryString = ""
+    if (chatHistory.length <= 0) {
+      return;
+      // only example message when chat history is empty
+    } else if (chatHistory.length === 1) {
+      chatHistoryString = chatHistory.map((chat) => {
+        return chat.isUser ? `You: ${chat.message}` : `AI: ${chat.message}`
+      }).join("\n");
+    } else {
+      // exclude the example message from chat history
+      chatHistoryString = chatHistory.slice(1).map((chat) => {
+        return chat.isUser ? `You: ${chat.message}` : `AI: ${chat.message}`;
+      }).join("\n");
+    }
+    const blob = new Blob([chatHistoryString], { type: "text/plain;charset=utf-8" });
+    // get the save file dialog
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "chat-history.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
 
   React.useEffect(() => {
     chatBottomRef.current.scrollIntoView();
@@ -247,6 +273,11 @@ function Server() {
 
             <button className='ml-auto'>
               <label htmlFor="my-modal" className="rounded btn btn-primary justify-end">Options</label>
+            </button>
+
+
+            <button onClick={exportChatHistory} className="rounded btn btn-outline tooltip tooltip-left" data-tip="Save Chat History">
+              {saveChatIcon}
             </button>
 
           </div>
