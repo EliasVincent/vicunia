@@ -26,7 +26,7 @@ function Server() {
   // chat history state
   const [chatHistory, setChatHistory] = React.useState([
     {
-      message: "Welcome to Alpaca! Start the server by clicking the button above an start chatting!",
+      message: "Welcome to Alpaca! Start the server by clicking the button above and start chatting! 🦙",
       isUser: false
     },
   ]);
@@ -236,8 +236,8 @@ function Server() {
 
         <div aria-label='chat-options-bar' className="bg-neutral p-4 flex flex-row justify-between items-center h-16 w-full">
           <div className='flex flex-row gap-2 items-center overflow-x-auto sm:overflow-x-hidden w-full'>
-            <div className={isStarting ? "rounded btn btn-primary loading" : "rounded btn btn-primary"} onClick={startSpawn}>start server</div>
-            <div onClick={killProcess} className='rounded btn btn-primary'>Stop</div>
+            <button className={isStarting ? "rounded btn btn-primary loading" : "rounded btn btn-primary"} onClick={startSpawn} disabled={serverReady} >start server</button>
+            <button onClick={killProcess} className='rounded btn btn-primary'>Stop</button>
 
             <div className={serverReady ? "badge badge-success gap-2 h-full align-middle" : "badge badge-warning gap-2 h-full align-middle"}>
               {serverReady ? "Alpaca Ready" : "Not started"}
@@ -245,9 +245,9 @@ function Server() {
 
             {simpleErr !== "" && <div className="badge badge-warning gap-2 h-full align-middle">{simpleErr}</div>}
 
-            <div className='ml-auto'>
+            <button className='ml-auto'>
               <label htmlFor="my-modal" className="rounded btn btn-primary justify-end">Options</label>
-            </div>
+            </button>
 
           </div>
         </div>

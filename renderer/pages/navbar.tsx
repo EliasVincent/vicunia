@@ -35,7 +35,7 @@ function Navbar() {
           </ul>
         </div>
         <div className="navbar-end">
-          <a onClick={() => shell.openExternal("https://github.com/EliasVincent")} className="btn btn-base">Github</a>
+          <a onClick={() => shell.openExternal("https://github.com/EliasVincent/vicunia")} className="btn btn-base">Github</a>
         </div>
       </div>
     </React.Fragment>
