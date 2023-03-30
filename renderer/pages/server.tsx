@@ -27,7 +27,7 @@ function Server() {
   // chat history state
   const [chatHistory, setChatHistory] = React.useState([
     {
-      message: "Welcome to Alpaca! Start the server by clicking the button above and start chatting! 🦙",
+      message: "Welcome to Vicunia! Check your setup in the options and start the server by clicking the button above and start chatting! 🦙",
       isUser: false
     },
   ]);
