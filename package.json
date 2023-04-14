@@ -2,7 +2,7 @@
   "private": true,
   "name": "vicunia",
   "description": "Install tools and chat frontend for LLaMA Alpaca",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": "Elias Vincent Simon <riesyeti@outlook.de>",
   "main": "app/background.js",
   "scripts": {
