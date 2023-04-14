@@ -80,7 +80,7 @@ function Home() {
               <p className='flex text-2xl'>Start</p>
             </a>
           </Link>
-          <Link href='/pre-setup'>
+          <Link href='/download-model'>
             <a className='btn-secondary w-full m-4 rounded flex items-center justify-center text-center bg-gradient-to-br from-secondary to-accent hover:scale-105 transition-all duration-200 ease-in-out '>
               {wrenchScrewdriver}
               <p className='flex text-2xl'>Setup</p>

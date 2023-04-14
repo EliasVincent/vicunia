@@ -15,6 +15,14 @@
     "build:linux": "nextron build --linux",
     "postinstall": "electron-builder install-app-deps"
   },
+  "build": {
+    "extraResources": [
+      {
+        "from": "./models",
+        "to": "../models"
+      }
+    ]
+  },
   "dependencies": {
     "@electron/remote": "^2.0.9",
     "electron-serve": "^1.1.0",

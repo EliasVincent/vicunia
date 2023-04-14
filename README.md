@@ -8,7 +8,13 @@ Vicunia is a frontend for using [alpaca.cpp](https://github.com/antimatter15/alp
 
 See [releases](https://github.com/EliasVincent/vicunia/releases) for the latest version.
 
-## Setup
+## Setup Automatic
+
+- Go to the "Setup" tab
+- Click "Download Model"
+- In the options menu in the chat tab, make sure the path points to the correct folder (vicunia root dir + resources/models)
+
+## Setup Manual
 
 **Follow the guide on** [alpaca.cpp](https://github.com/antimatter15/alpaca.cpp)!
 
@@ -20,10 +26,8 @@ If current Alpaca.cpp throws errors, [I have tested branches on my fork](https:/
 
 ## TODO
 
-- Easy one-click download and setup
-- ship with `X.cpp` binaries (which one will be determined as better models and cpp forks are releasing very quickly right now)
-- just choose the executable
 - more options
+- markdown renderer
 
 ## How to use [gpt4all](https://github.com/nomic-ai/gpt4all) (for now)
 
