@@ -33,10 +33,13 @@ function DownloadModel() {
           console.log("Download complete");
           setDownloadStatusMessage("Download complete");
           setSuccess(true);
+          setIsDownloading(false);
         }
       },
       onError: (err) => {
         console.log(err);
+        setSuccess(false);
+        setIsDownloading(false);
         setDownloadStatusMessage("Download failed" + err.toString());
       },
     });
@@ -57,12 +60,19 @@ function DownloadModel() {
         <div className="">
           <div className="flex flex-col flex-wrap gap-5 items-center">
             <h1 className='text-xl'>Download Model to default directory</h1>
-            <button className="btn btn-primary" onClick={downloadModel}>Download Model</button>
+            <button className="btn btn-primary" disabled={isDownloading} onClick={downloadModel}>Download Model</button>
             <div id="progress-bar">
               <progress className="progress progress-primary w-56 border" value={downloadPercentValue} max="100"></progress>
             </div>
             <div className="text-center text-xl">
               {downloadStatusMessage == "" ? "" : downloadStatusMessage}
+            </div>
+            <div>
+              <div className="alert alert-info shadow-lg text-white">
+                <div>
+                  If this downloader has issues, <a className='underline cursor-pointer' onClick={() => shell.openExternal("https://dl.eliasvsimon.com")}>open in browser instead</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

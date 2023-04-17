@@ -8,11 +8,13 @@ Vicunia is a frontend for using [alpaca.cpp](https://github.com/antimatter15/alp
 
 See [releases](https://github.com/EliasVincent/vicunia/releases) for the latest version.
 
-## Setup Automatic
+## Setup Automatic (v2.0+)
 
 - Go to the "Setup" tab
 - Click "Download Model"
 - In the options menu in the chat tab, make sure the path points to the correct folder (vicunia root dir + resources/models)
+
+> On Windows, the vicunia root dir looks something like this: `C:\Users\yourusername\AppData\Local\Programs\vicunia`
 
 ## Setup Manual
 
@@ -22,17 +24,23 @@ TL;DR: have a working and **compiled** alpaca.cpp folder with a model in your OS
 
 ## Troubleshooting
 
-If current Alpaca.cpp throws errors, [I have tested branches on my fork](https://github.com/EliasVincent/alpaca.cpp/branches) that work with Vicunia.
+- If current Alpaca.cpp throws errors, [I have tested branches on my fork](https://github.com/EliasVincent/alpaca.cpp/branches) that work with Vicunia.
+- On Windows, CPU with AVX2 support is required (at least with the included binaries).
+- If you update your version, try deleting `.vicunia-settings.json` from the home folder first to avoid issues.
+- Mac version is not really tested right now
+
+Feel free to open an issue on Github!
+
 
 ## TODO
 
 - more options
 - markdown renderer
 
-## How to use [gpt4all](https://github.com/nomic-ai/gpt4all) (for now)
+## How to use other .cpp forks
 
-- download quantized model into the `chat` folder
-- rename executable to `chat` or `chat.exe`
+- rename executable to `chat` (OSX / Linux) or `chat.exe`
+- have model file in same folder
 - paste path to `chat` folder in the options menu
 
 ## Credits
