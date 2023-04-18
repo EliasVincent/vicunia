@@ -4,8 +4,9 @@ import { ServerSettings } from '../components/ServerSettings';
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
+const rootPath = require('electron-root-path').rootPath;
 
-const defaultFolder = path.join(os.homedir(), "alpaca.cpp");
+const defaultFolder = path.join(rootPath, "../models");
 
 function SettingsModal() {
 

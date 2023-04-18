@@ -36,6 +36,7 @@
     "daisyui": "^2.51.3",
     "electron": "21.3.3",
     "electron-builder": "^23.6.0",
+    "electron-root-path": "^1.1.0",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
     "nodejs-file-downloader": "^4.10.6",
