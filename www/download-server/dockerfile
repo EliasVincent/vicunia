@@ -1,0 +1,3 @@
+FROM httpd:2.4
+COPY model/gpt4all-lora-quantized.bin /usr/local/apache2/htdocs/model/gpt4all-lora-quantized.bin
+COPY index.html /usr/local/apache2/htdocs

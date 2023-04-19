@@ -2,7 +2,7 @@
   "private": true,
   "name": "vicunia",
   "description": "Install tools and chat frontend for LLaMA Alpaca",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "author": "Elias Vincent Simon <riesyeti@outlook.de>",
   "main": "app/background.js",
   "scripts": {
@@ -14,6 +14,14 @@
     "build:mac": "nextron build --mac --x64",
     "build:linux": "nextron build --linux",
     "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "extraResources": [
+      {
+        "from": "./models",
+        "to": "../models"
+      }
+    ]
   },
   "dependencies": {
     "@electron/remote": "^2.0.9",
@@ -28,6 +36,7 @@
     "daisyui": "^2.51.3",
     "electron": "21.3.3",
     "electron-builder": "^23.6.0",
+    "electron-root-path": "^1.1.0",
     "next": "^12.3.4",
     "nextron": "^8.5.0",
     "nodejs-file-downloader": "^4.10.6",
